@@ -758,20 +758,66 @@ irt_model_3pl &lt;-
 
 # 3PL item parameters
 
-
-```
-## # A tibble: 8 x 4
-##   item              a1      b         g
-##   &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
-## 1 yum yum         1.33  1.21  0.00224  
-## 2 bee             3.34  0.852 0.000250 
-## 3 cockadoodledoo  2.18 -0.562 0.0000182
-## 4 buy             3.04 -1.97  0.00721  
-## 5 camping         2.35 -3.28  0.0000109
-## 6 moo             3.05  2.19  0.242    
-## 7 ouch            1.90  1.75  0.00188  
-## 8 aunt            2.81 -1.11  0.0355
-```
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; item &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; a1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; b &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; g &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; yum yum &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.331157 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.2110532 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0022400 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; bee &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.337795 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8517081 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0002496 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; cockadoodledoo &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.175625 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.5615925 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000182 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; buy &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.036791 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.9654383 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0072109 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; camping &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.352930 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -3.2803770 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000109 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; moo &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.050045 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.1944834 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.2418859 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; ouch &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.898742 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.7479600 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0018765 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; aunt &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.806517 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.1140992 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0354701 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
 ---
 
@@ -801,21 +847,21 @@ irt_model_3pl &lt;-
 
 ---
 
-# Differential Item Functioning (DIF)
+# Differential item functioning (DIF)
 
-&lt;img src="images/DIF.png" width="400" /&gt;
+&lt;img src="images/DIF.png" width="500" /&gt;
 
 ---
 
-# Poly
+# Polytymous item response theory
 
-&lt;img src="images/poly.png" width="400" /&gt;
+&lt;img src="images/poly.png" width="500" /&gt;
 
 ---
 
 # Multidimensional models
 
-&lt;img src="images/multi.png" width="400" /&gt;
+&lt;img src="images/multi.png" width="600" /&gt;
 
 ---
 
@@ -828,6 +874,8 @@ irt_model_3pl &lt;-
 - Mike Frank reccommends the Embretson &amp; Reise book [Item Response Theory for Psychologists](https://www.amazon.com/Response-Theory-Psychologists-Multivariate-Applications/dp/0805828192)
 
 - Great resources on Bayesian Item Response Theory with at education-stan.github.io
+
+- [Exercise](https://github.com/stenhaug/irt-basics/blob/master/exercise.Rmd) associate with this presentation
 
 ---
 

@@ -612,8 +612,9 @@ plot(irt_model_3pl, type = "trace")
 ```{r}
 coef(irt_model_3pl, simplify = TRUE)$items %>%
   as_tibble() %>% 
-  mutate(item = row.names(coef(irt_model_3pl, simplify = TRUE)$items)) %>% 
-  select(item, a1, b = d, g)
+  mutate(item = row.names(coef(irt_model_3pl, simplify = TRUE)$items)) %>%
+  select(item, a1, b = d, g) %>% 
+  knitr::kable(format = "html")
 ```
 
 ---
@@ -669,17 +670,17 @@ abilities %>%
 
 ---
 
-# Differential Item Functioning (DIF)
+# Differential item functioning (DIF)
 
-```{r, out.width=400}
+```{r, out.width=500}
 knitr::include_graphics("images/DIF.png")
 ```
 
 ---
 
-# Poly
+# Polytymous item response theory
 
-```{r, out.width = 400}
+```{r, out.width = 500}
 knitr::include_graphics("images/poly.png")
 ```
 
@@ -687,7 +688,7 @@ knitr::include_graphics("images/poly.png")
 
 # Multidimensional models
 
-```{r, out.width = 400}
+```{r, out.width = 600}
 knitr::include_graphics("images/multi.png")
 ```
 
@@ -702,6 +703,8 @@ knitr::include_graphics("images/multi.png")
 - Mike Frank reccommends the Embretson & Reise book [Item Response Theory for Psychologists](https://www.amazon.com/Response-Theory-Psychologists-Multivariate-Applications/dp/0805828192)
 
 - Great resources on Bayesian Item Response Theory with at education-stan.github.io
+
+- [Exercise](https://github.com/stenhaug/irt-basics/blob/master/exercise.Rmd) associate with this presentation
 
 ---
 
