@@ -12,12 +12,12 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, dpi = 300, out.width = 500)
 
 library(tidyverse)
 library(mirt)
 
-theme_set(theme_bw(base_size = 18))
+theme_set(theme_bw(base_size = 20))
 ```
 
 # The power of Item Response Theory (IRT)
@@ -181,7 +181,7 @@ We use the logistic $\sigma(x) = \dfrac{\exp(x)}{1 + \exp(x)}$ function to map t
 
 --
 
-```{r, out.width = 400, dpi=300}
+```{r, out.width = 400}
 logistic <- function(x) {exp(x) / (1 + exp(x))}
 
 tibble(
@@ -189,7 +189,7 @@ tibble(
 ) %>% 
   mutate(p = logistic(sum)) %>% 
   ggplot(aes(x = sum, y = p)) +
-  geom_path() +
+  geom_path(size = 3) +
   scale_y_continuous(labels = scales::percent) +
   labs(
     x = "Sum of person ability and item easiness",
@@ -202,7 +202,7 @@ tibble(
 
 # Looking at easiness
 
-```{r, out.width = 500, dpi = 300}
+```{r}
 different_item_easiness <- 
   tibble(
     ability = seq(-6, 6, 0.1)
@@ -217,13 +217,14 @@ different_item_easiness <-
     item = factor(item, levels = c("easiness = 2", "easiness = 1", "easiness = 0", "easiness = -1", "easiness = -2"))
   ) %>% 
   ggplot(aes(x = ability, y = p, color = item)) +
-  geom_path(aes(group = item)) +
+  geom_path(aes(group = item), size = 2) +
   scale_y_continuous(labels = scales::percent) +
   labs(
     x = "Person ability",
     y = "Probability of correct",
     title = ""
-  )
+  ) +
+  theme(legend.position = "bottom")
 
 different_item_easiness
 ```
@@ -236,7 +237,7 @@ different_item_easiness
 
 2. Calculate P(correct, correct, incorrect | ability = 1)
 
-```{r, out.width = 400, dpi = 300}
+```{r, out.width = 400}
 different_item_easiness
 ```
 
@@ -333,10 +334,9 @@ irt_model_rasch <-
 
 ## item curves
 
-```{r, dpi = 300}
+```{r}
 plot(irt_model_rasch, type = "trace")
 ```
-
 
 ---
 
@@ -351,6 +351,8 @@ abilities <-
 
 abilities %>% head() %>% knitr::kable(format = 'html')
 ```
+
+---
 
 # Ability estimates by sex
 
@@ -368,7 +370,7 @@ abilities %>%
 ```{r}
 abilities %>% 
   ggplot(aes(x = sum_score, y = theta_rasch)) +
-  geom_point()
+  geom_point(size = 3)
 ```
 
 ---
@@ -421,13 +423,14 @@ different_item_disc <-
       )
   ) %>% 
   ggplot(aes(x = ability, y = p, color = item)) +
-  geom_path(aes(group = item)) +
+  geom_path(aes(group = item), size = 2) +
   scale_y_continuous(labels = scales::percent) +
   labs(
     x = "Person ability",
     y = "Probability of correct",
     title = "All items have easiness = 0"
-  )
+  ) +
+  theme(legend.position = "bottom")
 
 different_item_disc
 ```
@@ -451,7 +454,9 @@ tibble(
 
 # Answer: Weighting
 
-Which of the outcomes is more likely for a person with ability $\theta_p = 2$?
+Which of the outcomes is more likely for a person with ability $\theta_p = 2$? (The easiness of each item is 0).
+
+--
 
 Outcome 1
 
@@ -461,6 +466,8 @@ logistic(0.5 * 2 + 0) *
   (1 - logistic(2 * 2 + 0)) * 
   logistic(3 * 2 + 0)
 ```
+
+--
 
 Outcome 2
 
@@ -477,7 +484,7 @@ logistic(0.5 * 2 + 0) *
 
 ## code
 
-```{r}
+```{r, echo = TRUE}
 irt_model_2pl <-
   mirt(
     data = english_words %>% select(-sex, -age),
@@ -504,8 +511,8 @@ coef(irt_model_2pl, simplify = TRUE)$items %>%
   as_tibble() %>% 
   mutate(item = row.names(coef(irt_model_2pl, simplify = TRUE)$items)) %>% 
   ggplot(aes(x = d, y = a1)) +
-  geom_point() +
-  ggrepel::geom_text_repel(aes(label = item)) +
+  geom_point(size = 3) +
+  ggrepel::geom_text_repel(aes(label = item), size = 6) +
   labs(
     x = "Easiness",
     y = "Discrimination"
@@ -516,14 +523,14 @@ coef(irt_model_2pl, simplify = TRUE)$items %>%
 
 # 2PL abilities
 
-```{r}
+```{r, dpi = 300}
 abilities <- 
   abilities %>% 
   mutate(theta_2pl = fscores(irt_model_2pl)[ , 1])
 
 abilities %>% 
   ggplot(aes(x = sum_score, y = theta_2pl)) +
-  geom_point(alpha = 0.1)
+  geom_point(alpha = 0.1, size = 3)
 ```
 
 ---
@@ -540,7 +547,7 @@ $P(y_{pi} = 1 | \theta_p, b_i) = \sigma(a_i \cdot \theta_p + b_i)$
 
 --
 
-## What might a third item parameter do?
+## What might a 3rd item parameter do?
 
 ---
 
@@ -560,7 +567,7 @@ $P(y_{pi} = 1 | \theta_p, a_i, b_i, g_i) = g_i + (1 - g_i) \cdot \sigma(a_i \cdo
 
 - Guessability is starting point at ability negative infinity
 
-```{r}
+```{r, out.width = 450}
 different_item_3pl <- 
   tibble(
     ability = seq(-6, 6, 0.1)
@@ -571,12 +578,13 @@ different_item_3pl <-
   ) %>% 
   gather(item, p, -ability) %>% 
   ggplot(aes(x = ability, y = p, color = item)) +
-  geom_path(aes(group = item)) +
+  geom_path(aes(group = item), size = 2) +
   scale_y_continuous(labels = scales::percent) +
   labs(
     x = "Person ability",
     y = "Probability of correct"
-  )
+  ) +
+  theme(legend.position = "bottom")
 
 different_item_3pl
 ```
@@ -601,7 +609,7 @@ irt_model_3pl <-
 
 ## item curves
 
-```{r}
+```{r, dpi = 300}
 plot(irt_model_3pl, type = "trace")
 ```
 
@@ -614,14 +622,13 @@ coef(irt_model_3pl, simplify = TRUE)$items %>%
   as_tibble() %>% 
   mutate(item = row.names(coef(irt_model_3pl, simplify = TRUE)$items)) %>%
   select(item, a1, b = d, g) %>% 
+  mutate_at(vars(a1:g), round, 2) %>% 
   knitr::kable(format = "html")
 ```
 
 ---
 
-# 3PL abilities
-
-## Compare to 2PL
+# 3PL abilities - compare to 2PL
 
 ```{r}
 abilities <- 
@@ -630,17 +637,17 @@ abilities <-
 
 abilities %>% 
   ggplot(aes(x = theta_2pl, y = theta_3pl)) +
-  geom_point(alpha = 0.1)
+  geom_point(alpha = 0.1, size = 3)
 ```
 
 ---
 
-## Compare to sum score
+# 3PL abilities - compare to sum score
 
 ```{r}
 abilities %>% 
   ggplot(aes(x = sum_score, y = theta_3pl)) +
-  geom_point(alpha = 0.1)
+  geom_point(alpha = 0.1, size = 3)
 ```
 
 ---
@@ -664,8 +671,11 @@ abilities %>%
   summarize(mean_sum_score = mean(sum_score), mean_theta_3pl = mean(theta_3pl)) %>% 
   gather(var, val, -age) %>% 
   ggplot(aes(x = age, y = val)) +
-  geom_point() +
-  facet_wrap(~ var, scale = "free_y", ncol = 1)
+  geom_point(size = 3) +
+  facet_wrap(~ var, scale = "free_y", ncol = 1) +
+  labs(
+    y = ""
+  )
 ```
 
 ---
@@ -704,7 +714,7 @@ knitr::include_graphics("images/multi.png")
 
 - Great resources on Bayesian Item Response Theory with at education-stan.github.io
 
-- [Exercise](https://github.com/stenhaug/irt-basics/blob/master/exercise.Rmd) associate with this presentation
+- [Exercise](https://github.com/stenhaug/irt-basics/blob/master/exercise.Rmd) associated with this presentation
 
 ---
 

@@ -470,13 +470,13 @@ We'll show the power of IRT with the Wordbank data (wordbank.stanford.edu)
 
 # Items 
 
-![](irt-basics_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+&lt;img src="irt-basics_files/figure-html/unnamed-chunk-11-1.png" width="500" /&gt;
 
 ---
 
 # Children
 
-![](irt-basics_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+&lt;img src="irt-basics_files/figure-html/unnamed-chunk-12-1.png" width="500" /&gt;
 
 ---
 
@@ -499,8 +499,7 @@ irt_model_rasch &lt;-
 
 ## item curves
 
-![](irt-basics_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
-
+&lt;img src="irt-basics_files/figure-html/unnamed-chunk-14-1.png" width="500" /&gt;
 
 ---
 
@@ -555,15 +554,17 @@ irt_model_rasch &lt;-
 &lt;/tbody&gt;
 &lt;/table&gt;
 
+---
+
 # Ability estimates by sex
 
-![](irt-basics_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+&lt;img src="irt-basics_files/figure-html/unnamed-chunk-16-1.png" width="500" /&gt;
 
 ---
 
 # Wait a second
 
-![](irt-basics_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+&lt;img src="irt-basics_files/figure-html/unnamed-chunk-17-1.png" width="500" /&gt;
 
 ---
 
@@ -639,7 +640,9 @@ Which of the outcomes is more likely for a person with ability `\(\theta_p = 2\)
 
 # Answer: Weighting
 
-Which of the outcomes is more likely for a person with ability `\(\theta_p = 2\)`?
+Which of the outcomes is more likely for a person with ability `\(\theta_p = 2\)`? (The easiness of each item is 0).
+
+--
 
 Outcome 1
 
@@ -654,6 +657,8 @@ logistic(0.5 * 2 + 0) *
 ```
 ## [1] 0.00156352
 ```
+
+--
 
 Outcome 2
 
@@ -676,24 +681,33 @@ logistic(0.5 * 2 + 0) *
 ## code
 
 
+```r
+irt_model_2pl &lt;-
+  mirt(
+    data = english_words %&gt;% select(-sex, -age),
+    model = 1,
+    itemtype = "2PL",
+    verbose = FALSE
+  )
+```
 
 ---
 
 ## item curves
 
-![](irt-basics_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
+&lt;img src="irt-basics_files/figure-html/unnamed-chunk-23-1.png" width="500" /&gt;
 
 ---
 
 # 2PL item parameters
 
-![](irt-basics_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
+&lt;img src="irt-basics_files/figure-html/unnamed-chunk-24-1.png" width="500" /&gt;
 
 ---
 
 # 2PL abilities
 
-![](irt-basics_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+&lt;img src="irt-basics_files/figure-html/unnamed-chunk-25-1.png" width="500" /&gt;
 
 ---
 
@@ -709,7 +723,7 @@ Each person has ability `\(\theta_p\)`. Each item has easiness `\(b_i\)` and dis
 
 --
 
-## What might a third item parameter do?
+## What might a 3rd item parameter do?
 
 ---
 
@@ -729,7 +743,7 @@ Each person has ability `\(\theta_p\)`. Each item has easiness `\(b_i\)`, discri
 
 - Guessability is starting point at ability negative infinity
 
-![](irt-basics_files/figure-html/unnamed-chunk-26-1.png)&lt;!-- --&gt;
+&lt;img src="irt-basics_files/figure-html/unnamed-chunk-26-1.png" width="450" /&gt;
 
 ---
 
@@ -752,7 +766,7 @@ irt_model_3pl &lt;-
 
 ## item curves
 
-![](irt-basics_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
+&lt;img src="irt-basics_files/figure-html/unnamed-chunk-28-1.png" width="500" /&gt;
 
 ---
 
@@ -770,80 +784,78 @@ irt_model_3pl &lt;-
 &lt;tbody&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; yum yum &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.331157 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.2110532 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0022400 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.33 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.21 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; bee &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.337795 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.8517081 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0002496 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.34 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.85 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; cockadoodledoo &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.175625 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -0.5615925 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000182 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.56 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; buy &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.036791 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -1.9654383 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0072109 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.04 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.97 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.01 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; camping &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.352930 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -3.2803770 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0000109 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.35 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -3.28 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; moo &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.050045 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.1944834 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2418859 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.05 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.19 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.24 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; ouch &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.898742 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.7479600 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0018765 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.90 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.75 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.00 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; aunt &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2.806517 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -1.1140992 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0354701 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.81 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -1.11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.04 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
 
 ---
 
-# 3PL abilities
+# 3PL abilities - compare to 2PL
 
-## Compare to 2PL
-
-![](irt-basics_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;
+&lt;img src="irt-basics_files/figure-html/unnamed-chunk-30-1.png" width="500" /&gt;
 
 ---
 
-## Compare to sum score
+# 3PL abilities - compare to sum score
 
-![](irt-basics_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;
+&lt;img src="irt-basics_files/figure-html/unnamed-chunk-31-1.png" width="500" /&gt;
 
 ---
 
 # Comparing sexes
 
-![](irt-basics_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
+&lt;img src="irt-basics_files/figure-html/unnamed-chunk-32-1.png" width="500" /&gt;
 
 ---
 
 # Comparing ages
 
-![](irt-basics_files/figure-html/unnamed-chunk-33-1.png)&lt;!-- --&gt;
+&lt;img src="irt-basics_files/figure-html/unnamed-chunk-33-1.png" width="500" /&gt;
 
 ---
 
@@ -875,7 +887,7 @@ irt_model_3pl &lt;-
 
 - Great resources on Bayesian Item Response Theory with at education-stan.github.io
 
-- [Exercise](https://github.com/stenhaug/irt-basics/blob/master/exercise.Rmd) associate with this presentation
+- [Exercise](https://github.com/stenhaug/irt-basics/blob/master/exercise.Rmd) associated with this presentation
 
 ---
 
