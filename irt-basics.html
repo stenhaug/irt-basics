@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Better Measurement with Item Response Theory</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Ben Stenhaug, Stanford University" />
+    <meta name="date" content="2019-12-17" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Better Measurement with Item Response Theory
+### Ben Stenhaug, Stanford University
+### December 17, 2019
+
+---
+
+
+
+
+# The power of Item Response Theory (IRT)
+
+In a world with and more big and naturally-occuring data, IRT offers a few promises:
+
+--
+
+1. Understand and leverage item variability
+
+--
+
+2. More precise measures of latent constructs
+
+--
+
+3. More information with fewer data points
+
+---
+
+# Wordbank example
+
+Wordbank (wordbank.stanford.edu) provides open source data from over 80k MacArthur-Bates Communicative Development Inventory (MB-CDI) administrations.
+
+&lt;img src="images/table.png" width="600" /&gt;
+
+---
+
+# Warm up: Answer with a partner
+
+1. Who is the highest ability person? Who is the lowest ability person?
+2. Which item is the hardest? Which is the easiest?
+3. Who has a higher ability between person D and person I?				
+4. Estimate the probability of person G getting item 2 correct.
+
+&lt;small&gt;
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; person &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; item 1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; item 2 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; item 3 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; C &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; D &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; E &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; G &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; H &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; I &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; J &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;/small&gt;
+
+---
+
+# What is measurement? 
+
+--
+
+1. You're interested in a latent construct (math ability, extroversion, anxiety etc.)
+
+--
+
+2. You measure that latent construct by giving people items (which we'll call a test)
+
+--
+
+3. You do some science with that measurement
+
+---
+
+# Relevant questions
+
+--
+
+1. Is this a good test? Are some items better than others?
+
+--
+
+2. Does this test measure the latent construct I care about?
+
+--
+
+3. Is this test fair?
+
+--
+
+4. How do we get from responses to the items to the measure of latent trait?
+
+---
+
+# How do I get from responses to the latent trait?
+
+&lt;small&gt;
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; child &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; mommy &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; yesterday &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; trash &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; A &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; B &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; C &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; D &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; E &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; F &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; G &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; H &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; I &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; J &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;/small&gt;
+
+---
+
+# The sum score
+
+--
+
+1. What assumptions does it make?
+
+2. What are its limitations?
+
+---
+
+# The sum score
+
+## Assumptions
+
+1. Items are equally difficult
+
+--
+
+2. Items are equally related to the latent construct
+
+--
+
+3. 1 on all items is positively related to the construct
+
+--
+
+## Limitations
+
+--
+
+1. How do I handle missing data?
+
+--
+
+2. How do I make predictions? 
+
+--
+
+3. How do I make an adaptive test?
+
+---
+
+# Item Response Theory (IRT) to the rescue!
+
+A parametric framework for item response data
+
+--
+
+Each person `\(p\)` has an ability `\(\theta_p\)`
+
+--
+
+Each item `\(i\)` has an easiness `\(b_i\)`
+
+--
+
+These combine to give the probability of correct response
+
+---
+
+# The logistic function
+
+We use the logistic `\(\sigma(x) = \dfrac{\exp(x)}{1 + \exp(x)}\)` function to map the sum of ability and easiness to probability of correct response
+
+--
+
+&lt;img src="irt-basics_files/figure-html/unnamed-chunk-4-1.png" width="400" /&gt;
+
+---
+
+# Looking at easiness
+
+&lt;img src="irt-basics_files/figure-html/unnamed-chunk-5-1.png" width="500" /&gt;
+
+---
+
+# Question: Probability of responses
+
+1. Calculate P(correct, correct, incorrect | ability = 0)
+
+2. Calculate P(correct, correct, incorrect | ability = 1)
+
+&lt;img src="irt-basics_files/figure-html/unnamed-chunk-6-1.png" width="400" /&gt;
+
+---
+
+# Answer: Probability of responses
+
+
+```r
+logistic &lt;- function(x) {exp(x) / (1 + exp(x))}
+```
+
+--
+
+1. Calculate P(correct, correct, incorrect | ability = 0)
+
+
+```r
+logistic(2 + 0) * logistic(0 + 0) * (1 - logistic(-2 + 0))
+```
+
+```
+## [1] 0.3879017
+```
+
+--
+
+2. Calculate P(correct, correct, incorrect | ability = 1)
+
+
+```r
+logistic(2 + 1) * logistic(0 + 1) * (1 - logistic(-2 + 1))
+```
+
+```
+## [1] 0.5091
+```
+
+---
+
+# IRT in practice
+
+We'll show the power of IRT with the Wordbank data (wordbank.stanford.edu) 
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; sex &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; age &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; yum yum &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; bee &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; cockadoodledoo &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; buy &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; camping &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; moo &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; ouch &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; aunt &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+# Items 
+
+![](irt-basics_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+
+---
+
+# Children
+
+![](irt-basics_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
+
+---
+
+# Fit item parameters
+
+## code
+
+
+```r
+irt_model_rasch &lt;- 
+  mirt(
+    data = english_words %&gt;% select(-sex, -age),
+    model = 1,
+    itemtype = "Rasch",
+    verbose = FALSE
+  )
+```
+
+---
+
+## item curves
+
+![](irt-basics_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+
+
+---
+
+# Ability Estimates
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; sex &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; age &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; sum_score &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; theta_rasch &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.8383632 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 21 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.3984515 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 26 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.1224427 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Male &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 27 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.8383632 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 19 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -0.8383632 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Female &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.3204348 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+# Ability estimates by sex
+
+![](irt-basics_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+
+---
+
+# Wait a second
+
+![](irt-basics_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+
+---
+
+# Moving from Rasch to 2PL 
+
+## Rasch
+
+Each person has ability `\(\theta_p\)`. Each item has easiness `\(b_i\)`.
+
+`\(P(y_{pi} = 1 | \theta_p, b_i) = \sigma(\theta_p + b_i)\)`
+
+where
+
+`\(\sigma(x) = \dfrac{\exp(x)}{1 + \exp(x)}\)`
+
+--
+
+## 2PL 
+
+Each person has ability `\(\theta_p\)`. Each item has easiness `\(b_i\)` and discrimination `\(a_i\)`.
+
+`\(P(y_{pi} = 1 | \theta_p, b_i, a_i) = \sigma(a_i \cdot \theta_p + b_i)\)`
+
+---
+
+# Discrimination 
+
+The discrimination `\(a_i\)` describes the strength of the relationship between the item and ability
+
+--
+
+&lt;img src="irt-basics_files/figure-html/unnamed-chunk-18-1.png" width="425" /&gt;
+
+---
+
+# Question: Weighting
+
+Which of the outcomes is more likely for a person with ability `\(\theta_p = 2\)`? (The easiness of each item is 0).
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; item discrimination &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; outcome 1 &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; outcome 2 &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 0.5 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; correct &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; correct &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; incorrect &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; correct &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; incorrect &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; correct &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3.0 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; correct &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; incorrect &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+
+# Answer: Weighting
+
+Which of the outcomes is more likely for a person with ability `\(\theta_p = 2\)`?
+
+Outcome 1
+
+
+```r
+logistic(0.5 * 2 + 0) * 
+  (1 - logistic(1 * 2 + 0)) * 
+  (1 - logistic(2 * 2 + 0)) * 
+  logistic(3 * 2 + 0)
+```
+
+```
+## [1] 0.00156352
+```
+
+Outcome 2
+
+
+```r
+logistic(0.5 * 2 + 0) * 
+  logistic(1 * 2 + 0) * 
+  logistic(2 * 2 + 0) * 
+  (1 - logistic(3 * 2 + 0))
+```
+
+```
+## [1] 0.00156352
+```
+
+---
+
+# Fit 2PL model
+
+## code
+
+
+
+---
+
+## item curves
+
+![](irt-basics_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
+
+---
+
+# 2PL item parameters
+
+![](irt-basics_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
+
+---
+
+# 2PL abilities
+
+![](irt-basics_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+
+---
+
+# Why stop at 2 item parameters?
+
+--
+
+## 2PL 
+
+Each person has ability `\(\theta_p\)`. Each item has easiness `\(b_i\)` and discrimination `\(a_i\)`.
+
+`\(P(y_{pi} = 1 | \theta_p, b_i) = \sigma(a_i \cdot \theta_p + b_i)\)`
+
+--
+
+## What might a third item parameter do?
+
+---
+
+# 3PL 
+
+Each person has ability `\(\theta_p\)`. Each item has easiness `\(b_i\)`, discrimination `\(a_i\)`, and guessability `\(g_i\)`.
+
+`\(P(y_{pi} = 1 | \theta_p, a_i, b_i, g_i) = g_i + (1 - g_i) \cdot \sigma(a_i \cdot \theta_p + b_i)\)`
+
+---
+
+# Intuition behind each of the 3 parameters
+
+- Easiness is horizontal translation
+
+- Discrimination is slope
+
+- Guessability is starting point at ability negative infinity
+
+![](irt-basics_files/figure-html/unnamed-chunk-26-1.png)&lt;!-- --&gt;
+
+---
+
+# Fit 3PL model
+
+## code
+
+
+```r
+irt_model_3pl &lt;-
+  mirt(
+    data = english_words %&gt;% select(-sex, -age),
+    model = 1,
+    itemtype = "3PL",
+    verbose = FALSE
+  )
+```
+
+---
+
+## item curves
+
+![](irt-basics_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
+
+---
+
+# 3PL item parameters
+
+
+```
+## # A tibble: 8 x 4
+##   item              a1      b         g
+##   &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;
+## 1 yum yum         1.33  1.21  0.00224  
+## 2 bee             3.34  0.852 0.000250 
+## 3 cockadoodledoo  2.18 -0.562 0.0000182
+## 4 buy             3.04 -1.97  0.00721  
+## 5 camping         2.35 -3.28  0.0000109
+## 6 moo             3.05  2.19  0.242    
+## 7 ouch            1.90  1.75  0.00188  
+## 8 aunt            2.81 -1.11  0.0355
+```
+
+---
+
+# 3PL abilities
+
+## Compare to 2PL
+
+![](irt-basics_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;
+
+---
+
+## Compare to sum score
+
+![](irt-basics_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;
+
+---
+
+# Comparing sexes
+
+![](irt-basics_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
+
+---
+
+# Comparing ages
+
+![](irt-basics_files/figure-html/unnamed-chunk-33-1.png)&lt;!-- --&gt;
+
+---
+
+# Differential Item Functioning (DIF)
+
+&lt;img src="images/DIF.png" width="1507" /&gt;
+
+---
+
+# Poly
+
+&lt;img src="images/poly.png" width="1040" /&gt;
+
+---
+
+# Multidimensional models
+
+&lt;img src="images/multi.png" width="2083" /&gt;
+
+---
+
+# Learning more 
+
+- Most popular way to estimate is the mirt R package written by Phil Chalmers
+
+- Phil Chalmers has some good workshop materials on [his GitHub](https://github.com/philchalmers/mirt/wiki)
+
+- Mike Frank reccommends the Embretson &amp; Reise book [Item Response Theory for Psychologists](https://www.amazon.com/Response-Theory-Psychologists-Multivariate-Applications/dp/0805828192)
+
+- Great resources on Bayesian Item Response Theory with at education-stan.github.io
+
+---
+
+# Getting in touch
+
+Ben Stenhaug
+
+benstenhaug.org
+
+stenhaug@stanford.edu
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
