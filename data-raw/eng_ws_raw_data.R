@@ -19,6 +19,10 @@ english_words <-
   )
 
 english_words %>% 
+  na.omit() %>% 
+  group_by(word) %>% 
+  filter(n() >= 10, mean(produces) > 0.01, mean(produces) < 0.99) %>% 
+  ungroup() %>% 
   spread(word, produces) %>% 
   na.omit() %>% 
   write_csv("data-clean/english_words.csv")

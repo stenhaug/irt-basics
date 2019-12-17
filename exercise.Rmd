@@ -1,0 +1,47 @@
+---
+title: "exercise"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. Install the tidyverse and mirt
+
+```{r}
+# install.packages("tidyverse")
+# install.packages("mirt")
+
+library(tidyverse)
+library(mirt)
+```
+
+2. go to https://github.com/stenhaug/irt-basics/tree/master/data-clean and download english_words.csv
+
+3. read english_words in
+
+```{r}
+english_words <- read_csv("data-clean/english_words.csv")
+```
+
+4. fit irt models to the full dataset
+
+some code is shown below. you can find more in the irt-basics.Rmd file
+
+```{r}
+model <- 
+  mirt(
+    english_words %>% select(-age, -sex), 
+    1, 
+    "3PL", 
+    verbose = FALSE
+  )
+
+coef(model)
+
+fscores(model, method = "EAP")
+```
+
+5. take a look at the mirt documentation with ?mirt...
+
