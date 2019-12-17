@@ -21,6 +21,18 @@ class: center, middle, inverse, title-slide
 
 
 
+# Organization
+
+These slides, the code that produced them, and the option of opening that code in an Rstudio cloud environment is available at
+
+**tinyurl.com/irt-basics**
+
+which redirects to 
+
+**stenhaug.github.io/irt-basics**
+
+---
+
 # The power of Item Response Theory (IRT)
 
 In a world with and more big and naturally-occuring data, IRT offers a few promises:
@@ -51,8 +63,9 @@ Wordbank (wordbank.stanford.edu) provides open source data from over 80k MacArth
 
 1. Who is the highest ability person? Who is the lowest ability person?
 2. Which item is the hardest? Which is the easiest?
-3. Who has a higher ability between person D and person I?				
-4. Estimate the probability of person G getting item 2 correct.
+3. Which item is the best? Which is the worst?
+4. Who has a higher ability between person D and person I?				
+5. Estimate the probability of person G getting item 2 correct.
 
 &lt;small&gt;
 
@@ -371,9 +384,41 @@ logistic(2 + 1) * logistic(0 + 1) * (1 - logistic(-2 + 1))
 
 ---
 
+# Who uses IRT?
+
+--
+
+Basically any measurement that happens in education:
+
+- The Programme for International Student Assessment (PISA)
+
+--
+
+- State tests
+
+--
+
+- GRE
+
+--
+
+- Department of Motor Vehicles
+
+--
+
+Very common in other fields as well:
+
+- Psychology
+
+- Health
+
+- Economics
+
+---
+
 # IRT in practice
 
-We'll show the power of IRT with the Wordbank data (wordbank.stanford.edu) 
+We'll show the power of IRT with the Wordbank data (wordbank.stanford.edu)
 
 &lt;table&gt;
  &lt;thead&gt;
@@ -877,6 +922,56 @@ irt_model_3pl &lt;-
 
 ---
 
+# A few examples of IRT
+
+- The Programme for International Student Assessment (PISA)
+
+--
+
+- State tests
+
+--
+
+- GRE
+
+---
+
+# Summary
+
+Item response theory (IRT) provides a parametric framework for people responding to items (which can be broadly defined!).
+
+--
+
+It has a few specific advantages:
+
+- Putting students and item on the same scale
+
+--
+
+- Understanding items through item parameters
+
+--
+
+- Better measurement of the latent construct 
+
+--
+
+- Better understanding of the relationship between the latent construct  and the items
+
+--
+
+- Handling of missing data
+
+--
+
+- Ability to make predictions
+
+--
+
+- More complicated things like equating, testing for bias, comparisons with other models etc.
+
+---
+
 # Learning more 
 
 - Most popular way to estimate is the mirt R package written by Phil Chalmers
@@ -889,15 +984,27 @@ irt_model_3pl &lt;-
 
 - [Exercise](https://github.com/stenhaug/irt-basics/blob/master/exercise.Rmd) associated with this presentation
 
+- Denny Borsboom article [The attack of the psychometricians](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2779444/) is fantastic (and Mike Frank wrote it [a love letter](http://babieslearninglanguage.blogspot.com/2019/11/letter-of-recommendation-attack-of.html))
+
+---
+
+# Moving forward
+
+- Where might IRT be useful in your work?
+
+- What would be helpful in getting started?
+
 ---
 
 # Getting in touch
 
-Ben Stenhaug
+- Ben Stenhaug
 
-benstenhaug.org
+- benstenhaug.org
 
-stenhaug@stanford.edu
+- stenhaug@stanford.edu
+
+- These slides, the code that produced them, and the option of opening that code in an Rstudio cloud environment is available at **tinyurl.com/irt-basics** which redirects to **stenhaug.github.io/irt-basics**
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
