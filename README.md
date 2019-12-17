@@ -2,4 +2,6 @@
 
 [And code can be found here](https://github.com/stenhaug/irt-basics/blob/master/irt-basics.Rmd)
 
+[Exercise](/irt-basics.Rmd)
+
 Any questions, reach out to stenhaug@stanford.edu
